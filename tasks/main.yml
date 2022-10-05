@@ -1,0 +1,67 @@
+---
+# tasks file for outline
+- name: Set up main directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    mode: "0750"
+  with_items:
+    - "{{ outline_setup_path }}"
+  tags:
+    - configuration
+  become: true
+
+- name: Set up config directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    owner: "{% if outline_uid %}{{ outline_uid }}{% else %}{{ ansible_effective_user_id }}{% endif %}"
+    group: "{% if outline_gid %}{{ outline_gid }}{% else %}{{ ansible_effective_group_id }}{% endif %}"
+    mode: "0750"
+  with_items:
+    - "{{ deluge_config_volume }}"
+    - "{{ radarr_config_volume }}"
+    - "{{ sonarr_config_volume }}"
+    - "{{ lidarr_config_volume }}"
+    - "{{ jackett_config_volume }}"
+  tags:
+    - configuration
+  become: true
+
+- name: Set up upload directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    owner: "{% if outline_uid %}{{ outline_uid }}{% else %}{{ ansible_effective_user_id }}{% endif %}"
+    group: "{% if outline_gid %}{{ outline_gid }}{% else %}{{ ansible_effective_group_id }}{% endif %}"
+    mode: "0750"
+  with_items:
+    - "{{ radarr_upload_volume }}"
+    - "{{ sonarr_upload_volume }}"
+    - "{{ lidarr_upload_volume }}"
+  tags:
+    - configuration
+  become: true
+
+- name: Write configuration files
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "{{ outline_setup_path }}/{{ item }}"
+    mode: '0640'
+  loop:
+    - "docker-compose.yml"
+    - "env.deluge.conf"
+    - "env.radarr.conf"
+    - "env.sonarr.conf"
+    - "env.lidarr.conf"
+    - "env.jackett.conf"
+  tags:
+    - configuration
+
+- name: Ensure all requested components are running.
+  community.docker.docker_compose:
+    project_src: "{{ outline_setup_path }}"
+    build: false
+  become: false

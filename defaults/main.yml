@@ -1,0 +1,26 @@
+---
+# defaults file for outline
+
+
+outline_setup_path: '~/outline'
+
+outline_port: 3000
+outline_url: "http://localhost:{{ outline_port }}"
+outline_cdn_url: 
+
+outline_volume_base: "/mnt/outline"
+outline_volume_redis: "{{ outline_volume_base }}/redis"
+outline_volume_db: "{{ outline_volume_base }}/db"
+outline_volume_s3: "{{ outline_volume_base }}/s3"
+
+oidc_client_id:
+oidc_client_secret:
+oidc_auth_uri:
+oidc_token_uri:
+oidc_userinfo_uri:
+
+outline_db_user: "postgres"
+outline_db_password: "changeme"
+outline_db: "outline"
+
+

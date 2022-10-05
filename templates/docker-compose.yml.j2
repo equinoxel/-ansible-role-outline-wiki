@@ -1,0 +1,72 @@
+version: "3.3"
+services:
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    networks:
+      - outline
+    volumes:
+      - {{ outline_volume_redis }}:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+  postgres:
+    image: docker.io/library/postgres:12-alpine
+    env_file:
+      - "{{ outline_setup_path }}/env.db.conf"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    networks:
+      - outline
+{% if outline_db_port %}
+    ports:
+      - {{ outline_db_port }}:5432
+{% endif %}
+    volumes:
+      - {{ outline_volume_db }}:/var/lib/postgresql/data
+
+
+  s3:
+    image: lphoward/fake-s3
+    env_file:
+      - "{{ outline_setup_path }}/env.s3.conf"
+{% if outline_s3_port %}
+    ports:
+      - {{ outline_fake_s3_port }}:4569
+{% endif %}
+    volumes:
+      - {{ outline_volume_s3 }}:/fakes3_root
+    networks:
+      - outline
+
+  outline:
+    image: outlinewiki/outline:latest
+    command: sh -c "yarn sequelize:migrate --env production-ssl-disabled && yarn start"
+    env_file:
+      - ./env.outline.conf
+      - ./env.oidc.conf
+    restart: always
+    ports:
+      - {{ outline_port }}:3000
+    depends_on:
+      - postgres
+      - redis
+      - s3
+    networks:
+      - outline
+
+networks:
+  outline: {}
+     
