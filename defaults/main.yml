@@ -1,6 +1,9 @@
 ---
 # defaults file for outline
 
+outline_secret_key: 'changeme'
+outline_utils_secret: 'changeme'
+
 
 outline_setup_path: '~/outline'
 
@@ -19,8 +22,35 @@ oidc_auth_uri:
 oidc_token_uri:
 oidc_userinfo_uri:
 
+# If the db_host is not "postgres", then we assume the
+# db is external and not spin up the docker container
+outline_db_schema: "postgres"
+outline_db_host: "postgres"
+outlinr_db_port: "5432"
 outline_db_user: "postgres"
 outline_db_password: "changeme"
 outline_db: "outline"
 
+# Spin up the fake S3 only if "fake_s3" is true
+outline_fake_s3: true
+outline_fake_s3_port:
+outline_aws_access_key_id:
+outline_aws_secret_access_key:
+outline_aws_region:
+outline_aws_s3_upload_bucket_url: "http://s3:4569"
+outline_aws_s3_upload_bucket_name: outline-bucket
+outline_aws_s3_upload_max_size: "26214400"
+outline_aws_s3_force_path_style: "true"
+outline_aws_s3_acl: "private"
+
+outline_smtp_host:
+outline_smtp_port:
+outline_smtp_username:
+outline_smtp_password:
+outline_smtp_from_email:
+outline_smtp_reply_email:
+
+outline_team_logo_url:
+
+outline_language: 'en_US'
 

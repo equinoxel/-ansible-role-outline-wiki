@@ -17,6 +17,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
 
+{% if outline_db_schema == 'postgres' and outline_db_host == 'postgres' %}
   postgres:
     image: docker.io/library/postgres:12-alpine
     env_file:
@@ -36,8 +37,11 @@ services:
 {% endif %}
     volumes:
       - {{ outline_volume_db }}:/var/lib/postgresql/data
+{% else %}
+  # External database at "{{ outline_db_schema }}:{{ outline_db_host }}: {{ outline_db_port }}"
+{% endif %}
 
-
+{% if outline_fake_s3 %}
   s3:
     image: lphoward/fake-s3
     env_file:
@@ -50,6 +54,7 @@ services:
       - {{ outline_volume_s3 }}:/fakes3_root
     networks:
       - outline
+{% endif %}
 
   outline:
     image: outlinewiki/outline:latest
