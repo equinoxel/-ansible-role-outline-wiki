@@ -6,10 +6,15 @@ outline_utils_secret: 'changeme'
 
 
 outline_setup_path: '~/outline'
+outline_deployment: ''
 
 outline_port: 3000
 outline_url: "http://localhost:{{ outline_port }}"
+outline_force_https: "false"
+outline_enable_updates: "false"
 outline_cdn_url: 
+
+outline_debug: "cache,presenters,events,emails,mailer,utils,multiplayer,server,services"
 
 outline_volume_base: "/mnt/outline"
 outline_volume_redis: "{{ outline_volume_base }}/redis"
@@ -22,18 +27,27 @@ oidc_auth_uri:
 oidc_token_uri:
 oidc_userinfo_uri:
 
+outline_google_client_id:
+outline_google_client_secret:
+outline_slack_client_id:
+outline_slack_client_secret:
+
 # If the db_host is not "postgres", then we assume the
 # db is external and not spin up the docker container
 outline_db_schema: "postgres"
 outline_db_host: "postgres"
-outlinr_db_port: "5432"
+outline_db_port: "5432"
 outline_db_user: "postgres"
 outline_db_password: "changeme"
 outline_db: "outline"
 
+# By default, PostgreSQL is not secured. If you have a secure
+# database instance, replace the content below with "enable".
+outline_db_ssl: "disable"
+
 # Spin up the fake S3 only if "fake_s3" is true
 outline_fake_s3: true
-outline_fake_s3_port:
+outline_fake_s3_port: 4569
 outline_aws_access_key_id:
 outline_aws_secret_access_key:
 outline_aws_region:
@@ -53,4 +67,3 @@ outline_smtp_reply_email:
 outline_team_logo_url:
 
 outline_language: 'en_US'
-

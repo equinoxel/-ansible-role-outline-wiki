@@ -10,151 +10,75 @@ None
 
 All variables are listed below (see also `defaults/main.yml`).
 
-### Common variables
-
-You need to specify:
-
-- The `timezone`
-- The location where torrents will be downloaded
-- The location where different configuration files are stored
-- The place where `docker-compose.yml` and the environment files are stored
-
 ```yml
-timezone: 'Europe/Brussels'
-torrent_downloads_volume: '/mnt/download'
-outline_configuration_volume: '/mnt/config'
+# defaults file for outline
+
+outline_secret_key: 'changeme'
+outline_utils_secret: 'changeme'
+
+
 outline_setup_path: '~/outline'
-```
+outline_deployment: ''
 
-If you need to install the containers with a specific user/group ID, then define:
+outline_port: 3000
+outline_url: "http://localhost:{{ outline_port }}"
+outline_force_https: "false"
+outline_enable_updates: "false"
+outline_cdn_url: 
 
-```yml
-outline_uid:
-outline_gid:
-```
-The role allows oyu to specify which components will be installed:
+outline_debug: "cache,presenters,events,emails,mailer,utils,multiplayer,server,services"
 
-```yml
-deluge_enabled: true 
-sonarr_enabled: true 
-lidarr_enabled: true 
-jackett_enabled: true
-```
+outline_volume_base: "/mnt/outline"
+outline_volume_redis: "{{ outline_volume_base }}/redis"
+outline_volume_db: "{{ outline_volume_base }}/db"
+outline_volume_s3: "{{ outline_volume_base }}/s3"
 
-### Deluge torrent
+oidc_client_id:
+oidc_client_secret:
+oidc_auth_uri:
+oidc_token_uri:
+oidc_userinfo_uri:
 
-You can specify the image version and the log level:
+outline_google_client_id:
+outline_google_client_secret:
+outline_slack_client_id:
+outline_slack_client_secret:
 
-```yml
-deluge_image_version: 'latest'
-deluge_loglevel: 'warning'
-```
+# If the db_host is not "postgres", then we assume the
+# db is external and not spin up the docker container
+outline_db_schema: "postgres"
+outline_db_host: "postgres"
+outline_db_port: "5432"
+outline_db_user: "postgres"
+outline_db_password: "changeme"
+outline_db: "outline"
 
-Deluge works on ports 6881 and 8112. You can change these ports:
+# By default, PostgreSQL is not secured. If you have a secure
+# database instance, replace the content below with "enable".
+outline_db_ssl: "disable"
 
-```yml
-deluge_host_port: 6881
-deluge_admin_port: 8112
-```
+# Spin up the fake S3 only if "fake_s3" is true
+outline_fake_s3: true
+outline_fake_s3_port: 4569
+outline_aws_access_key_id:
+outline_aws_secret_access_key:
+outline_aws_region:
+outline_aws_s3_upload_bucket_url: "http://s3:4569"
+outline_aws_s3_upload_bucket_name: outline-bucket
+outline_aws_s3_upload_max_size: "26214400"
+outline_aws_s3_force_path_style: "true"
+outline_aws_s3_acl: "private"
 
-You can also overwrite the location where deluge's configuration is stored (e.g. if you already have deluge installed and you want to use the Ansible role):
+outline_smtp_host:
+outline_smtp_port:
+outline_smtp_username:
+outline_smtp_password:
+outline_smtp_from_email:
+outline_smtp_reply_email:
 
-```yml
-deluge_config_volume: '{{ outline_configuration_volume }}/deluge'
-```
+outline_team_logo_url:
 
-### Radarr
-
-You can specify the image version and the port exposed:
-
-```yml
-radarr_image_version: 'latest'
-radarr_host_port: 7878
-```
-You can also overwrite the location where radarr's configuration is stored (e.g. if you already have it installed and you want to use the Ansible role):
-
-```yml
-radarr_config_volume: '{{ outline_configuration_volume }}/radarr'
-```
-
-Radarr needs a place to copy the downloaded series:
-
-```yml
-radarr_series_volume: '/mnt/videos/Movies'
-```
-
-**Notes**:
-
-- Depending on your settings, it will also rename your current series
-- You need write access to that directory, so Sonarr can actually copy the files
-
-### Sonarr
-
-You can specify the image version and the port exposed:
-
-```yml
-sonarr_image_version: 'latest'
-sonarr_host_port: 8989
-```
-You can also overwrite the location where sonarr's configuration is stored (e.g. if you already have it installed and you want to use the Ansible role):
-
-```yml
-sonarr_config_volume: '{{ outline_configuration_volume }}/sonarr'
-```
-
-Sonarr needs a place to copy the downloaded series:
-
-```yml
-sonarr_series_volume: '/mnt/videos/Series'
-```
-
-**Notes**:
-
-- Depending on your settings, it will also rename your current series
-- You need write access to that directory, so Sonarr can actually copy the files
-
-# Lidarr
-
-You can specify the image version and the port exposed:
-
-```yml
-lidarr_image_version: 'latest'
-lidarr_host_port: 8686
-```
-You can also overwrite the location where lidarr's configuration is stored (e.g. if you already have it installed and you want to use the Ansible role):
-
-```yml
-lidarr_config_volume: '{{ outline_configuration_volume }}/lidarr'
-```
-Lidarr needs a place to copy the downloaded music:
-
-```yml
-lidarr_music_upload_volume: '/mnt/music/Reference'
-```
-
-You will need to add a reference to your music collection (so you don't download what you already have). The layout below allows for multiple collections:
-
-```yml
-lidarr_music_volumes: 
-  - {path: '/mnt/music/Sonos', alias: 'sonos' }
-  - {path: '/mnt/music/Audiophile', alias: 'audiophile' }
-  - {path: '/mnt/music/Raw', alias: 'raw' }
-```
-
-The `path` is the actual directory where the collection is located and the `alias` is the internal mapping name in Docker.
-
-# Jakett
-You can specify the image version, the port exposed and to autoupdate:
-
-```yml
-jackett_image_version: 'latest'
-jackett_auto_update: true
-jackett_host_port: 9117
-```
-You can also overwrite the location where jackett's configuration is stored (e.g. if you already have it installed and you want to use the Ansible role):
-
-```yml
-jackett_config_volume: '{{ outline_configuration_volume }}/jackett'
+outline_language: 'en_US'
 ```
 
 ## Dependencies

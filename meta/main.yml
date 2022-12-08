@@ -2,7 +2,7 @@ galaxy_info:
   author: Laur Ivan
   namespace: laurivan
   role_name: outline
-  description: Sonarr, Lidarr, Deluge and Jackett via Docker
+  description: Outline Docker
   license: MIT
 
   min_ansible_version: "2.4"
@@ -26,12 +26,9 @@ galaxy_info:
         - all
 
   galaxy_tags: 
-    - sonarr
-    - lidarr
-    - deluge
-    - jackett
-    - media
-    - grabber
+    - outline
+    - document
+    - wiki
     - docker
 
 dependencies: []

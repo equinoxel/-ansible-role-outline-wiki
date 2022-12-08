@@ -46,7 +46,7 @@ services:
     image: lphoward/fake-s3
     env_file:
       - "{{ outline_setup_path }}/env.s3.conf"
-{% if outline_s3_port %}
+{% if outline_fake_s3_port %}
     ports:
       - {{ outline_fake_s3_port }}:4569
 {% endif %}
@@ -58,11 +58,12 @@ services:
 
   outline:
     image: outlinewiki/outline:latest
-    command: sh -c "yarn sequelize:migrate --env production-ssl-disabled && yarn start"
+    command: sh -c "yarn start"
+    # command: sh -c "yarn sequelize:migrate --env production-ssl-disabled && yarn start"
     env_file:
       - ./env.outline.conf
       - ./env.oidc.conf
-    restart: always
+    #restart: never
     ports:
       - {{ outline_port }}:3000
     depends_on:
