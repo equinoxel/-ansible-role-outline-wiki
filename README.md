@@ -97,6 +97,6 @@ You need a machine with docker and docker-compose installed.
 
 MIT
 
-##  Author Information
+## Author Information
 
 This role was created in 2022 by [Laur Ivan](https://www.laurivan.com).

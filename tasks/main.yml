@@ -21,22 +21,8 @@
     group: "{% if outline_gid %}{{ outline_gid }}{% else %}{{ ansible_effective_group_id }}{% endif %}"
     mode: "0750"
   with_items:
-    - "{{ outline_config_volume }}"
-
-  tags:
-    - configuration
-  become: true
-
-- name: Set up upload directories
-  ansible.builtin.file:
-    state: directory
-    path: "{{ item }}"
-    owner: "{% if outline_uid %}{{ outline_uid }}{% else %}{{ ansible_effective_user_id }}{% endif %}"
-    group: "{% if outline_gid %}{{ outline_gid }}{% else %}{{ ansible_effective_group_id }}{% endif %}"
-    mode: "0750"
-  with_items:
-    - "{{ outline_config_volume }}"
     - "{{ outline_setup_path }}"
+
   tags:
     - configuration
   become: true
