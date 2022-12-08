@@ -41,7 +41,7 @@ services:
   # External database at "{{ outline_db_schema }}:{{ outline_db_host }}: {{ outline_db_port }}"
 {% endif %}
 
-{% if outline_fake_s3 %}
+{% if outline_fake_s3 and (outline_fake_s3 != "") %}
   s3:
     image: lphoward/fake-s3
     env_file:
@@ -61,15 +61,19 @@ services:
     command: sh -c "yarn start"
     # command: sh -c "yarn sequelize:migrate --env production-ssl-disabled && yarn start"
     env_file:
-      - ./env.outline.conf
-      - ./env.oidc.conf
-    #restart: never
+      - "{{ outline_setup_path }}/env.outline.conf"
+      - "{{ outline_setup_path }}/env.oidc.conf"
+    restart: always
     ports:
       - {{ outline_port }}:3000
     depends_on:
+{% if outline_db_schema == 'postgres' and outline_db_host == 'postgres' %}
       - postgres
+{% endif %}
       - redis
+{% if outline_fake_s3 and (outline_fake_s3 != "") %}
       - s3
+{% endif %}
     networks:
       - outline
 
