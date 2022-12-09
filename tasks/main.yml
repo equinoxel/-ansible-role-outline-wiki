@@ -22,6 +22,9 @@
     mode: "0750"
   with_items:
     - "{{ outline_setup_path }}"
+    - "{{ outline_volume_redis }}"
+    - "{{ outline_volume_db }}"
+    - "{{ outline_volume_s3 }}"
 
   tags:
     - configuration

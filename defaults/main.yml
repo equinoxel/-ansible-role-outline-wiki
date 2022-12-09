@@ -4,8 +4,6 @@
 outline_secret_key: 'changeme'
 outline_utils_secret: 'changeme'
 
-
-outline_setup_path: '~/outline'
 outline_deployment: ''
 
 outline_port: 3000
@@ -17,6 +15,7 @@ outline_cdn_url:
 outline_debug: "cache,presenters,events,emails,mailer,utils,multiplayer,server,services"
 
 outline_volume_base: "/mnt/outline"
+outline_setup_path: '{{ outline_volume_base }}/config'
 outline_volume_redis: "{{ outline_volume_base }}/redis"
 outline_volume_db: "{{ outline_volume_base }}/db"
 outline_volume_s3: "{{ outline_volume_base }}/s3"
