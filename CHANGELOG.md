@@ -4,7 +4,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## 1.0.0 (2022-12-10)
 
-
 ### Bug Fixes
 
 * AWS variable, fake S3 condition. ([8b84af0](https://git.laurivan.com/Dev/ansible-role-outline-wiki/commit/8b84af081fc8ec7a63ce139409c3fbd546ae1478))
