@@ -13,7 +13,7 @@ services:
     networks:
       - outline
     volumes:
-      - {{ outline_volume_redis }}:/data
+      - {{ outline_volume_redis | expanduser | realpath }}:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
 
@@ -21,7 +21,7 @@ services:
   postgres:
     image: docker.io/library/postgres:12-alpine
     env_file:
-      - "{{ outline_setup_path }}/env.db.conf"
+      - "{{ outline_setup_path | expanduser | realpath }}/env.db.conf"
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
@@ -45,13 +45,13 @@ services:
   s3:
     image: lphoward/fake-s3
     env_file:
-      - "{{ outline_setup_path }}/env.s3.conf"
+      - "{{ outline_setup_path | expanduser | realpath }}/env.s3.conf"
 {% if outline_fake_s3_port %}
     ports:
       - {{ outline_fake_s3_port }}:4569
 {% endif %}
     volumes:
-      - {{ outline_volume_s3 }}:/fakes3_root
+      - {{ outline_volume_s3 | expanduser | realpath }}:/fakes3_root
     networks:
       - outline
 {% endif %}
@@ -61,8 +61,8 @@ services:
     command: sh -c "yarn start"
     # command: sh -c "yarn sequelize:migrate --env production-ssl-disabled && yarn start"
     env_file:
-      - "{{ outline_setup_path }}/env.outline.conf"
-      - "{{ outline_setup_path }}/env.oidc.conf"
+      - "{{ outline_setup_path | expanduser | realpath }}/env.outline.conf"
+      - "{{ outline_setup_path | expanduser | realpath }}/env.oidc.conf"
     restart: always
     ports:
       - {{ outline_port }}:3000
