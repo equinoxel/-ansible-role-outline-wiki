@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://git.laurivan.com/Dev/ansible-role-outline-wiki/compare/v2.0.1...v2.0.2) (2022-12-11)
+
+
+### Bug Fixes
+
+* **docs:** Update role documentation. ([f17ee9a](https://git.laurivan.com/Dev/ansible-role-outline-wiki/commit/f17ee9a9cc7ccb15f0196a7dbecf83e0b1c53bdf))
+* Remove superfluous port declaration. ([b7fd2cf](https://git.laurivan.com/Dev/ansible-role-outline-wiki/commit/b7fd2cff4539b97dfd3b70e1d1d26138ed648dd2))
+
 ### [2.0.1](https://git.laurivan.com/Dev/ansible-role-outline-wiki/compare/v2.0.0...v2.0.1) (2022-12-11)
 
 
