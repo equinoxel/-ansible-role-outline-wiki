@@ -23,9 +23,19 @@
   with_items:
     - "{{ outline_setup_path | expanduser | realpath }}"
     - "{{ outline_volume_redis | expanduser | realpath }}"
-    - "{{ outline_volume_db | expanduser | realpath }}"
     - "{{ outline_volume_s3 | expanduser | realpath }}"
+  tags:
+    - configuration
+  become: true
 
+- name: Set up the database directory.
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    mode: "0755"
+    owner: 70
+  with_items:
+    - "{{ outline_volume_db | expanduser | realpath }}"
   tags:
     - configuration
   become: true

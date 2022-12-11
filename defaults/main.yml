@@ -7,7 +7,8 @@ outline_utils_secret: 'changeme'
 outline_deployment: ''
 
 outline_port: 3000
-outline_url: "http://localhost:{{ outline_port }}"
+outline_public_port: "{{ outline_port }}"
+outline_url: "http://localhost:{{ outline_public_port }}"
 outline_force_https: "false"
 outline_enable_updates: "false"
 outline_cdn_url: 
