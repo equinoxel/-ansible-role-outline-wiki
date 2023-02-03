@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.4](https://git.laurivan.com/Dev/ansible-role-outline-wiki/compare/v2.0.3...v2.0.4) (2023-02-03)
+
+
+### Bug Fixes
+
+* Change db update command. ([7c533ba](https://git.laurivan.com/Dev/ansible-role-outline-wiki/commit/7c533baa05bd6af418895a627303039081aa00ff))
+
 ### [2.0.3](https://git.laurivan.com/Dev/ansible-role-outline-wiki/compare/v2.0.2...v2.0.3) (2022-12-12)
 
 ### [2.0.2](https://git.laurivan.com/Dev/ansible-role-outline-wiki/compare/v2.0.1...v2.0.2) (2022-12-11)
