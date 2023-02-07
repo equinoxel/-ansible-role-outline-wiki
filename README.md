@@ -2,6 +2,26 @@
 
 This role installs Outline via Docker.
 
+<!-- TOC -->
+
+- [Requirements](#requirements)
+- [Role Variables](#role-variables)
+  - [Outline Core Variables](#outline-core-variables)
+  - [Storage](#storage)
+  - [Authentication](#authentication)
+    - [OIDC](#oidc)
+    - [Google ID](#google-id)
+    - [Slack](#slack)
+  - [Database](#database)
+  - [S3](#s3)
+  - [Email](#email)
+- [Dependencies](#dependencies)
+- [Example Playbook](#example-playbook)
+- [License](#license)
+- [Author Information](#author-information)
+
+<!-- /TOC -->
+
 ## Requirements
 
 None
