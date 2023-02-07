@@ -58,7 +58,6 @@ services:
 
   outline:
     image: outlinewiki/outline:latest
-    #command: sh -c "yarn start"
     command: sh -c "yarn db:migrate --env production-ssl-disabled && yarn start"
     env_file:
       - "{{ outline_setup_path | expanduser | realpath }}/env.outline.conf"
